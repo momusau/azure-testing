@@ -259,7 +259,7 @@ foreach ($a in $filtered) {
         -ControlPlane 'EntraDirectoryRole' `
         -RoleName $hpRoleIds[$a.RoleDefinitionId] `
         -RoleDefinitionId $a.RoleDefinitionId `
-        -Scope ($a.DirectoryScopeId ?? '/') `
+        -Scope $(if ($a.DirectoryScopeId) { $a.DirectoryScopeId } else { '/' }) `
         -AssignmentCategory 'DirectAssignment' `
         -AssignmentState 'Active' `
         -Notes ''
@@ -280,7 +280,7 @@ try {
             -ControlPlane 'EntraDirectoryRole' `
             -RoleName $hpRoleIds[$e.RoleDefinitionId] `
             -RoleDefinitionId $e.RoleDefinitionId `
-            -Scope ($e.DirectoryScopeId ?? '/') `
+            -Scope $(if ($e.DirectoryScopeId) { $e.DirectoryScopeId } else { '/' }) `
             -AssignmentCategory 'PIMEligible' `
             -AssignmentState 'Eligible' `
             -Notes ''
@@ -304,7 +304,7 @@ try {
             -ControlPlane 'EntraDirectoryRole' `
             -RoleName $hpRoleIds[$s.RoleDefinitionId] `
             -RoleDefinitionId $s.RoleDefinitionId `
-            -Scope ($s.DirectoryScopeId ?? '/') `
+            -Scope $(if ($s.DirectoryScopeId) { $s.DirectoryScopeId } else { '/' }) `
             -AssignmentCategory 'PIMActiveSchedule' `
             -AssignmentState 'ScheduledActive' `
             -Notes ''
@@ -358,14 +358,14 @@ foreach ($ra in $rbacAssignments) {
             -AssignmentCategory 'DirectAssignment' `
             -AssignmentState 'Active' `
             -PrincipalType 'User' `
-            -EffectiveUserId ($user.Id ?? $principalId) `
-            -EffectiveUserUPN ($user.UserPrincipalName ?? '') `
-            -EffectiveUserDisplayName ($user.DisplayName ?? $ra.DisplayName) `
+            -EffectiveUserId $(if ($user.Id) { $user.Id } else { $principalId }) `
+            -EffectiveUserUPN $(if ($user.UserPrincipalName) { $user.UserPrincipalName } else { '' }) `
+            -EffectiveUserDisplayName $(if ($user.DisplayName) { $user.DisplayName } else { $ra.DisplayName }) `
             -SourceGroupId '' -SourceGroupDisplayName '' -IsRoleAssignableGroup '' -Notes ''))
     }
     elseif ($principalType -eq 'Group') {
         $group = Get-CachedGroup -Id $principalId
-        $groupName = $group.DisplayName ?? $ra.DisplayName
+        $groupName = if ($group.DisplayName) { $group.DisplayName } else { $ra.DisplayName }
         $isRAG = if ($group -and $group.IsAssignableToRole) { 'Yes' } else { 'No' }
         $members = if ($group) { Get-CachedGroupMembers -GroupId $group.Id } else { @() }
 
@@ -397,7 +397,7 @@ foreach ($ra in $rbacAssignments) {
             -RoleDefinitionId $ra.RoleDefinitionId -Scope $ra.Scope `
             -AssignmentCategory 'DirectAssignment' -AssignmentState 'Active' `
             -PrincipalType 'ServicePrincipal' -EffectiveUserId $principalId `
-            -EffectiveUserUPN '' -EffectiveUserDisplayName ($ra.DisplayName ?? '') `
+            -EffectiveUserUPN '' -EffectiveUserDisplayName $(if ($ra.DisplayName) { $ra.DisplayName } else { '' }) `
             -SourceGroupId '' -SourceGroupDisplayName '' -IsRoleAssignableGroup '' `
             -Notes ''))
     }
@@ -407,7 +407,7 @@ foreach ($ra in $rbacAssignments) {
             -RoleDefinitionId $ra.RoleDefinitionId -Scope $ra.Scope `
             -AssignmentCategory 'DirectAssignment' -AssignmentState 'Active' `
             -PrincipalType $principalType -EffectiveUserId $principalId `
-            -EffectiveUserUPN '' -EffectiveUserDisplayName ($ra.DisplayName ?? '') `
+            -EffectiveUserUPN '' -EffectiveUserDisplayName $(if ($ra.DisplayName) { $ra.DisplayName } else { '' }) `
             -SourceGroupId '' -SourceGroupDisplayName '' -IsRoleAssignableGroup '' `
             -Notes "Unknown principal type: $principalType"))
     }
