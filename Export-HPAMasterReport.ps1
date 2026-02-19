@@ -419,7 +419,7 @@ Write-Host "`r  Done: $total RBAC assignments processed.       "
 Write-Host "Section E: Azure RBAC PIM — eligible & scheduled-active..."
 
 # Helper to process RBAC PIM schedule objects
-function Process-RbacPimSchedules {
+function Expand-RbacPimSchedules {
     param(
         [System.Collections.Generic.List[object]]$Rows,
         [array]$Schedules,
@@ -454,7 +454,7 @@ try {
         $scope = "/subscriptions/$($sub.Id)"
         $rbacEligSchedules += Get-AzRoleEligibilityScheduleInstance -Scope $scope -ErrorAction Stop
     }
-    Process-RbacPimSchedules -Rows $rows -Schedules $rbacEligSchedules `
+    Expand-RbacPimSchedules -Rows $rows -Schedules $rbacEligSchedules `
         -AssignmentCategory 'PIMEligible' -AssignmentState 'Eligible' -Label 'Eligible'
 } catch {
     Write-Warning "Section E (eligible) skipped — Get-AzRoleEligibilityScheduleInstance not available or errored: $_"
@@ -468,7 +468,7 @@ try {
         $scope = "/subscriptions/$($sub.Id)"
         $rbacActiveSchedules += Get-AzRoleAssignmentScheduleInstance -Scope $scope -ErrorAction Stop
     }
-    Process-RbacPimSchedules -Rows $rows -Schedules $rbacActiveSchedules `
+    Expand-RbacPimSchedules -Rows $rows -Schedules $rbacActiveSchedules `
         -AssignmentCategory 'PIMActiveSchedule' -AssignmentState 'ScheduledActive' -Label 'ScheduledActive'
 } catch {
     Write-Warning "Section E (scheduled-active) skipped — Get-AzRoleAssignmentScheduleInstance not available or errored: $_"
