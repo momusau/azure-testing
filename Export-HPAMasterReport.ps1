@@ -56,18 +56,29 @@ $AzureRBACHighlyPrivilegedRoles = @(
 )
 
 # ─────────────────────────────────────────────────────────────────────────────
-# 2. CONNECTION VALIDATION
+# 2. CONNECTION VALIDATION (connect-once guard)
 # ─────────────────────────────────────────────────────────────────────────────
 
+# --- Microsoft Graph ---
 $mgCtx = Get-MgContext
 if (-not $mgCtx) {
-    throw "Not connected to Microsoft Graph. Run Connect-MgGraph -Scopes 'RoleManagement.Read.All','Group.Read.All','User.Read.All','Directory.Read.All' first."
+    Write-Host "No existing Graph session — connecting (process scope)..."
+    Connect-MgGraph -Scopes 'RoleManagement.Read.All','Group.Read.All','User.Read.All','Directory.Read.All' -ContextScope Process -NoWelcome
+    $mgCtx = Get-MgContext
+} else {
+    Write-Host "Reusing existing Graph session."
 }
 Write-Host "Graph context : $($mgCtx.Account)  Tenant: $($mgCtx.TenantId)"
 
+# --- Azure ---
 $azCtx = Get-AzContext
 if (-not $azCtx) {
-    throw "Not connected to Azure. Run Connect-AzAccount first."
+    Disable-AzContextAutosave -Scope Process | Out-Null
+    Write-Host "No existing Az session — connecting..."
+    Connect-AzAccount -TenantId $mgCtx.TenantId | Out-Null
+    $azCtx = Get-AzContext
+} else {
+    Write-Host "Reusing existing Az session."
 }
 Write-Host "Az context    : $($azCtx.Account.Id)  Tenant: $($azCtx.Tenant.Id)"
 
