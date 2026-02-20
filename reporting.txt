@@ -1,0 +1,220 @@
+Monitoring and Reporting Plan
+
+1. Purpose
+
+This document outlines the organization’s approach to monitoring, alerting, and reporting across systems, applications, and security domains. It defines the tools in use, how notifications are received, and how information is communicated to stakeholders.
+
+The objectives of this plan are to:
+	•	Ensure timely detection of operational and security events
+	•	Enable rapid response through structured alerting mechanisms
+	•	Provide accurate, consistent reporting to leadership and technical teams
+	•	Maintain auditability and accountability
+
+⸻
+
+2. Monitoring Strategy
+
+Monitoring provides visibility across infrastructure, applications, network edge, and security controls.
+
+2.1 Monitoring Tools
+
+Splunk
+
+Primary centralized log aggregation and monitoring platform.
+
+Used for:
+	•	Log ingestion and correlation
+	•	Security monitoring (SIEM use cases)
+	•	Infrastructure and application event analysis
+	•	Real-time and scheduled alert conditions
+	•	Compliance evidence collection
+
+⸻
+
+Akamai
+
+Edge security and content delivery monitoring platform.
+
+Used for:
+	•	Web traffic visibility
+	•	DDoS monitoring
+	•	Web Application Firewall (WAF) monitoring
+	•	Bot management analytics
+	•	Edge performance monitoring
+
+⸻
+
+Atlassian Guard
+
+Identity and SaaS security monitoring for Atlassian products.
+
+Used for:
+	•	Access monitoring
+	•	Authentication and SSO events
+	•	Account security oversight
+	•	Policy enforcement tracking
+
+⸻
+
+3. Alerting Strategy
+
+Alerting ensures that critical events are escalated to the appropriate teams for response.
+
+PagerDuty
+
+Used for:
+	•	Incident escalation
+	•	On-call rotations
+	•	Real-time notification via email, SMS, and push
+	•	Incident lifecycle tracking
+
+⸻
+
+Splunk
+
+Used for:
+	•	Trigger-based alerts from log events
+	•	Security correlation alerts
+	•	Threshold-based monitoring alerts
+
+⸻
+
+New Relic
+
+Used for:
+	•	Application Performance Monitoring (APM)
+	•	Infrastructure monitoring
+	•	Performance degradation alerts
+	•	Error rate and latency thresholds
+
+⸻
+
+Everbridge
+
+Used for:
+	•	Mass notification
+	•	Crisis communication
+	•	Executive-level alerting
+	•	Business continuity communication
+
+⸻
+
+ServiceNow
+
+Used for:
+	•	Incident creation and tracking
+	•	Integration with monitoring tools
+	•	Change management workflows
+	•	Audit and compliance tracking
+
+⸻
+
+SerpAPI
+
+Used for:
+	•	API-driven monitoring integrations
+	•	External data enrichment
+	•	Automated intelligence feeds supporting alert context
+
+⸻
+
+4. Reporting Strategy
+
+Reporting ensures transparency, compliance, and executive awareness.
+
+SAS
+
+Used for:
+	•	Advanced analytics
+	•	Trend analysis
+	•	Risk modeling
+	•	Executive reporting datasets
+
+⸻
+
+Tableau
+
+Used for:
+	•	Interactive dashboards
+	•	Operational reporting
+	•	KPI tracking
+	•	Visual analytics for leadership
+
+⸻
+
+Excel
+
+Used for:
+	•	Ad-hoc reporting
+	•	Data manipulation
+	•	Audit tracking
+	•	Manual reconciliations
+
+⸻
+
+JIRA
+
+Used for:
+	•	Ticket-based reporting
+	•	SLA tracking
+	•	Incident trend reporting
+	•	Operational workload analysis
+
+⸻
+
+5. Notification Channels
+
+The primary method of receiving alerts and reports is:
+
+Email
+
+All major tools are configured to:
+	•	Send real-time alert notifications via email
+	•	Distribute scheduled reports via email
+	•	Provide incident updates and escalations via email
+	•	Notify stakeholders of status changes
+
+Additional channels (where applicable):
+	•	SMS (PagerDuty, Everbridge)
+	•	Push notifications (PagerDuty, New Relic)
+	•	ServiceNow ticket creation
+	•	Dashboard-based monitoring
+
+Email remains the authoritative notification channel for:
+	•	Incident awareness
+	•	Escalation triggers
+	•	Executive reporting distribution
+	•	Compliance notifications
+
+⸻
+
+6. Escalation Overview
+	1.	Monitoring tool detects event.
+	2.	Alerting platform generates notification.
+	3.	Email notification is sent to distribution lists.
+	4.	PagerDuty or Everbridge escalates if unacknowledged.
+	5.	ServiceNow ticket is created or updated.
+	6.	JIRA tracks remediation work if required.
+	7.	Reporting tools capture metrics for trend analysis.
+
+⸻
+
+7. Governance and Review
+	•	Monitoring rules are reviewed quarterly.
+	•	Alert thresholds are tuned to minimize noise.
+	•	Reporting accuracy is validated monthly.
+	•	Email distribution lists are reviewed quarterly.
+	•	Escalation policies are tested annually.
+
+⸻
+
+8. Continuous Improvement
+
+The Monitoring and Reporting Plan is reviewed regularly to:
+	•	Reduce alert fatigue
+	•	Improve detection time
+	•	Improve response time
+	•	Enhance reporting clarity
+	•	Ensure compliance and audit readiness
+
+New tools and integrations may be added as business and security requirements evolve.
